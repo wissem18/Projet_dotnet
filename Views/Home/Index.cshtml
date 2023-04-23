@@ -1,0 +1,48 @@
+﻿@using ProjetDotNet.Models.DBModels
+@model ProjetDotNet.Models.DBModels.Survey;
+<div class="text-center">
+    <h1 class=" display-4 ">Home</h1>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        @if (ViewBag.surveys != null)
+        {
+            @foreach (Survey s in ViewBag.surveys)
+            {
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Survey
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title ">@s.Question </h3>
+                            <p class="card-text ">@s.Description</p>
+                            @using (Html.BeginForm("Vote", "Home", FormMethod.Post))
+                            {
+                                <input value=@s.Id type="text" asp-for="Id" hidden />
+                                <input type="submit" class="btn  btn-outline-dark w-50" value="Vote" />
+                            }
+                        </div>
+                        <div class="card-footer text-muted">
+                            @if (s.closed == 1)
+                            {
+                                <p>Closed</p>
+                            }
+                            else
+                            {
+                                <p>Open</p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info text-center" role="alert">No Surveys were found</div>
+        }
+    </div>
+</div>
